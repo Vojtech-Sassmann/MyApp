@@ -10,6 +10,8 @@
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>myapp-persistence</module>
+        <module>myapp-service</module>
+        <module>myapp-api</module>
     </modules>
 
     <properties>
