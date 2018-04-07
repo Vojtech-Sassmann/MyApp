@@ -9,6 +9,16 @@ public class CreateNoteGroupDTO {
 
     private String name;
 
+    private Long userId;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     public String getName() {
         return name;
     }
@@ -22,19 +32,21 @@ public class CreateNoteGroupDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CreateNoteGroupDTO that = (CreateNoteGroupDTO) o;
-        return Objects.equals(name, that.name);
+        return Objects.equals(name, that.name) &&
+                Objects.equals(userId, that.userId);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name);
+        return Objects.hash(name, userId);
     }
 
     @Override
     public String toString() {
         return "CreateNoteGroupDTO{" +
                 "name='" + name + '\'' +
+                ", userId=" + userId +
                 '}';
     }
 }

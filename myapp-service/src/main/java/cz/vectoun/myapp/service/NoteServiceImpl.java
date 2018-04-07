@@ -24,8 +24,8 @@ public class NoteServiceImpl extends AbstractService<Note> implements NoteServic
 
     @Override
     public void createNote(Note note, NoteGroup noteGroup) {
-        noteDao.create(note);
-
         noteGroup.addNote(note);
+
+        noteDao.create(note);
     }
 }

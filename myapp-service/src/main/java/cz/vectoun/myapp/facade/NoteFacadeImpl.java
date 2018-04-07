@@ -66,6 +66,15 @@ public class NoteFacadeImpl implements NoteFacade {
     }
 
     @Override
+    public NoteDTO findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id can not be null");
+        }
+
+        return beanMappingService.mapTo(noteService.findById(id), NoteDTO.class);
+    }
+
+    @Override
     public void deleteNote(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Id can not be null");

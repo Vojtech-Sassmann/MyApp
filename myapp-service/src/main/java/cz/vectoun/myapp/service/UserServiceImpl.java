@@ -36,6 +36,11 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
+    public User findUserByEmail(String email) {
+        return userDao.findByEmail(email);
+    }
+
+    @Override
     public boolean isAdmin(User user) {
         //must get a fresh copy from database
         user = userDao.findById(user.getId());

@@ -1,5 +1,8 @@
 package cz.vectoun.myapp.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +14,17 @@ public class NoteGroupDTO {
     private Long id;
     private String name;
     private List<NoteDTO> notes;
+    private UserDTO owner;
+
+    @JsonIgnore
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    @JsonProperty
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
 
     public Long getId() {
         return id;

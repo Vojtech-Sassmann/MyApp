@@ -17,6 +17,14 @@ public interface UserService extends Service<User> {
     void registerUser(User user, String unencryptedPassword);
 
     /**
+     * Find user with the given email in database
+     *
+     * @param email by which will be user find
+     * @return User object with that email
+     */
+    User findUserByEmail(String email);
+
+    /**
      * Try to authenticate a user.
      *
      * @param user which will be authenticated

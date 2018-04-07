@@ -8,6 +8,8 @@ import cz.vectoun.myapp.persistance.entity.User;
 import cz.vectoun.myapp.service.BeanMappingService;
 import cz.vectoun.myapp.service.NoteGroupService;
 import cz.vectoun.myapp.service.UserService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 /**
  * @author Vojtech Sassmann <vojtech.sassmann@gmail.com>
  */
+@Service
+@Transactional
 public class NoteGroupFacadeImpl implements NoteGroupFacade {
 
     private BeanMappingService beanMappingService;
@@ -31,11 +35,11 @@ public class NoteGroupFacadeImpl implements NoteGroupFacade {
     }
 
     @Override
-    public NoteGroupDTO createNoteGroup(CreateNoteGroupDTO group, Long userId) {
+    public NoteGroupDTO createNoteGroup(CreateNoteGroupDTO group) {
         if (group == null) {
             throw new IllegalArgumentException("Group can not be null.");
         }
-        if (userId == null) {
+        if (group.getUserId() == null) {
             throw new IllegalArgumentException("UserId can not be null.");
         }
         String name = group.getName();
@@ -44,9 +48,9 @@ public class NoteGroupFacadeImpl implements NoteGroupFacade {
             throw new IllegalArgumentException("Name can not be empty or null: " + group);
         }
 
-        User foundUser = userService.findById(userId);
+        User foundUser = userService.findById(group.getUserId());
         if (foundUser == null) {
-            throw new IllegalArgumentException("For given id was no user found: " + userId);
+            throw new IllegalArgumentException("For given id was no user found: " + group.getUserId());
         }
 
         NoteGroup noteGroup = new NoteGroup();
@@ -55,6 +59,15 @@ public class NoteGroupFacadeImpl implements NoteGroupFacade {
         noteGroupService.createNoteGroup(noteGroup, foundUser);
 
         return beanMappingService.mapTo(noteGroupService.findById(noteGroup.getId()), NoteGroupDTO.class);
+    }
+
+    @Override
+    public NoteGroupDTO findById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("Id can not be null.");
+        }
+
+        return beanMappingService.mapTo(noteGroupService.findById(id), NoteGroupDTO.class);
     }
 
     @Override
@@ -104,6 +117,7 @@ public class NoteGroupFacadeImpl implements NoteGroupFacade {
             throw new IllegalArgumentException("For given id was no user found: " + userId);
         }
 
-        return beanMappingService.mapTo(noteGroupService.findAllForUser(foundUser), NoteGroupDTO.class);
+        List<NoteGroup> noteGroups = noteGroupService.findAllForUser(foundUser);
+        return beanMappingService.mapTo(noteGroups, NoteGroupDTO.class);
     }
 }

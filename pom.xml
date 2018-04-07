@@ -12,6 +12,8 @@
         <module>myapp-persistence</module>
         <module>myapp-service</module>
         <module>myapp-api</module>
+        <module>myapp-rest</module>
+        <module>myapp-sample-data</module>
     </modules>
 
     <properties>

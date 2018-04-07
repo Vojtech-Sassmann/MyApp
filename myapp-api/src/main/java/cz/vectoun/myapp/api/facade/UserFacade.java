@@ -22,6 +22,14 @@ public interface UserFacade {
 	UserDTO findUserById(Long userId);
 
 	/**
+	 * Find user with the given email in database
+	 *
+	 * @param email by which will be user find
+	 * @return UserDTO object with that email
+	 */
+	UserDTO findUserByEmail(String email);
+
+	/**
 	 * Register the given user with the given unencrypted password.
 	 *
 	 * @param user which will be registered

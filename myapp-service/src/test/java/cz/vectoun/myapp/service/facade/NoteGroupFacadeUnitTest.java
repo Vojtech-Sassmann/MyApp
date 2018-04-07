@@ -63,9 +63,10 @@ public class NoteGroupFacadeUnitTest extends AbstractTestNGSpringContextTests {
         when(userService.findById(anyLong())).thenReturn(mockedUser);
 
         CreateNoteGroupDTO specification = new CreateNoteGroupDTO();
+        specification.setUserId(1L);
         specification.setName("TODOs");
 
-        noteGroupFacade.createNoteGroup(specification, 1L);
+        noteGroupFacade.createNoteGroup(specification);
 
         verify(noteGroupService, times(1)).createNoteGroup(any(), eq(mockedUser));
     }

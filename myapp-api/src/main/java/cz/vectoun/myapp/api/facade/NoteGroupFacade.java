@@ -11,12 +11,19 @@ import java.util.List;
 public interface NoteGroupFacade {
 
     /**
+     * Finds note group by id
+     *
+     * @param id id
+     * @return NoteGroup
+     */
+    NoteGroupDTO findById(Long id);
+
+    /**
      * Creates new note group for given user
      * @param group specify attributes for new note group
-     * @param userId id of the owner of the new note group
      * @return newly created note group
      */
-    NoteGroupDTO createNoteGroup(CreateNoteGroupDTO group, Long userId);
+    NoteGroupDTO createNoteGroup(CreateNoteGroupDTO group);
 
     /**
      * Deletes note group found by given id

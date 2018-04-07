@@ -1,5 +1,7 @@
 package cz.vectoun.myapp.service;
 
+import cz.vectoun.myapp.api.dto.NoteDTO;
+import cz.vectoun.myapp.persistance.entity.Note;
 import org.dozer.Mapper;
 import org.springframework.stereotype.Service;
 

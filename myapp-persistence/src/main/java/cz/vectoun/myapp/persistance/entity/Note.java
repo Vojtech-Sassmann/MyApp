@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -23,7 +22,6 @@ public class Note {
     @ManyToOne
     private NoteGroup noteGroup;
 
-    @NotNull
     private String text;
 
     private LocalDate created;
@@ -42,6 +40,14 @@ public class Note {
     @PreUpdate
     protected void onUpdate() {
         updated = LocalDate.now();
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public LocalDate getUpdated() {
+        return updated;
     }
 
     public void setCreated(LocalDate created) {

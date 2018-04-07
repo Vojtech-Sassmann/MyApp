@@ -29,4 +29,12 @@ public interface NoteFacade {
      * @param id if of note to be deleted
      */
     void deleteNote(Long id);
+
+    /**
+     * Finds by id
+     *
+     * @param id id
+     * @return note
+     */
+    NoteDTO findById(Long id);
 }

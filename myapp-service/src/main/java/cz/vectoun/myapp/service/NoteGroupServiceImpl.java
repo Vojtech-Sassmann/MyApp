@@ -25,9 +25,9 @@ public class NoteGroupServiceImpl extends AbstractService<NoteGroup> implements 
 
     @Override
     public void createNoteGroup(NoteGroup noteGroup, User user) {
-        noteGroupDao.create(noteGroup);
-
         user.addNoteGroup(noteGroup);
+
+        noteGroupDao.create(noteGroup);
     }
 
     @Override
