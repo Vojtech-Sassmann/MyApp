@@ -1,5 +1,6 @@
 package cz.vectoun.myapp.facade;
 
+import cz.vectoun.myapp.api.dto.RegisterUserDTO;
 import cz.vectoun.myapp.api.dto.UserAuthenticateDTO;
 import cz.vectoun.myapp.api.dto.UserDTO;
 import cz.vectoun.myapp.api.facade.UserFacade;
@@ -44,11 +45,11 @@ public class UserFacadeImpl implements UserFacade {
     }
 
 	@Override
-	public void registerUser(UserDTO user, String unencryptedPassword) {
-		User userEntity = beanMappingService.mapTo(user, User.class);
+	public Long registerUser(RegisterUserDTO registerUserDTO) {
+		User userEntity = beanMappingService.mapTo(registerUserDTO, User.class);
 		userEntity.setRole(UserRole.REGULAR);
-		userService.registerUser(userEntity, unencryptedPassword);
-		user.setId(userEntity.getId());
+		userService.registerUser(userEntity, registerUserDTO.getUnencryptedPassword());
+		return userEntity.getId();
 	}
 
 	@Override

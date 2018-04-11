@@ -23,13 +23,16 @@ import java.io.PrintWriter;
  * @author Vojtech Sassmann &lt;vojtech.sassmann@gmail.com&gt;
  */
 @WebFilter(urlPatterns = {
-		ApiUris.ROOT_AUTH + "/*"})
+		ApiUris.ROOT_URI_USERS + "/*",
+		ApiUris.ROOT_URI_NOTEGROUPS + "/*",
+		ApiUris.ROOT_URI_NOTES + "/*"
+})
 public class SecurityFilter implements Filter {
 
 	private static final String LOGIN_ERROR_MESSAGE = "{\"errors\":[\"User is not logged in.\"]}";
 
 	@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(FilterConfig filterConfig) {
 
 	}
 
@@ -56,6 +59,7 @@ public class SecurityFilter implements Filter {
 		for (Cookie cookie : cookies) {
 			if (SecurityUtils.AUTH_COOKIE.equals(cookie.getName())) {
 				token = SecurityUtils.decrypt(SecurityUtils.KEY, SecurityUtils.INIT_VECTOR, cookie.getValue());
+				break;
 			}
 		}
 
@@ -86,7 +90,7 @@ public class SecurityFilter implements Filter {
 				.getBean(UserFacade.class);
 
 		UserDTO user = userFacade.findUserById(id);
-		if (!user.getEmail().equals(email)) {
+		if (user == null || !user.getEmail().equals(email)) {
 			sendUnAuthError(response);
 			return;
 		}

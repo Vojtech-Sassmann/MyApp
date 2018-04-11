@@ -1,5 +1,6 @@
 package cz.vectoun.myapp.service.facade;
 
+import cz.vectoun.myapp.api.dto.RegisterUserDTO;
 import cz.vectoun.myapp.api.dto.UserAuthenticateDTO;
 import cz.vectoun.myapp.api.dto.UserDTO;
 import cz.vectoun.myapp.api.facade.UserFacade;
@@ -109,7 +110,14 @@ public class UserFacadeUnitTest extends AbstractTestNGSpringContextTests {
 
 	@Test
 	public void registerUserTest() {
-		userFacade.registerUser(userDTO1, "123456789");
+
+		RegisterUserDTO registerUserDTO = new RegisterUserDTO();
+		registerUserDTO.setFirstName(userDTO1.getFirstName());
+		registerUserDTO.setEmail(userDTO1.getEmail());
+		registerUserDTO.setSurname(userDTO1.getSurname());
+		registerUserDTO.setUnencryptedPassword("123456789");
+
+		userFacade.registerUser(registerUserDTO);
 
 		verify(userService, times(1)).registerUser(user1, "123456789");
 	}

@@ -1,6 +1,8 @@
 package cz.vectoun.myapp.service;
 
 import cz.vectoun.myapp.persistance.dao.UserDao;
+import cz.vectoun.myapp.persistance.entity.Note;
+import cz.vectoun.myapp.persistance.entity.NoteGroup;
 import cz.vectoun.myapp.persistance.entity.User;
 import cz.vectoun.myapp.persistance.enums.UserRole;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,17 @@ import java.security.SecureRandom;
 @Service
 public class UserServiceImpl extends AbstractService<User> implements UserService {
 
-    private UserDao userDao;
+    private final UserDao userDao;
+    private final NoteGroupService noteGroupService;
+    private final NoteService noteService;
 
     @Inject
-    public UserServiceImpl(UserDao dao) {
+    public UserServiceImpl(UserDao dao, NoteGroupService noteGroupService, NoteService noteService) {
         super(dao);
 
         this.userDao = dao;
+        this.noteGroupService = noteGroupService;
+        this.noteService = noteService;
     }
 
     @Override
@@ -33,6 +39,15 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
             user.setRole(UserRole.REGULAR);
         }
         userDao.create(user);
+
+        NoteGroup defaultNoteGroup = new NoteGroup();
+        defaultNoteGroup.setName("default");
+        noteGroupService.createNoteGroup(defaultNoteGroup, user);
+
+        Note firstNote = new Note();
+        firstNote.setName("My first note!");
+        firstNote.setText("Hi, I am your first note.");
+        noteService.createNote(firstNote, defaultNoteGroup);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package cz.vectoun.myapp.api.facade;
 
 
+import cz.vectoun.myapp.api.dto.RegisterUserDTO;
 import cz.vectoun.myapp.api.dto.UserAuthenticateDTO;
 import cz.vectoun.myapp.api.dto.UserDTO;
 
@@ -32,10 +33,10 @@ public interface UserFacade {
 	/**
 	 * Register the given user with the given unencrypted password.
 	 *
-	 * @param user which will be registered
-	 * @param unencryptedPassword by which will be user authenticate
+	 * @param registerUserDTO which will be registered
+	 * @return id of newly created entity
 	 */
-	void registerUser(UserDTO user, String unencryptedPassword);
+	Long registerUser(RegisterUserDTO registerUserDTO);
 
 	/**
 	 * Get all registered users

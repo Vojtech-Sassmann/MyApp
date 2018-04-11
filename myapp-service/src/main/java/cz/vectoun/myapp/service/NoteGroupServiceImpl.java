@@ -1,6 +1,7 @@
 package cz.vectoun.myapp.service;
 
 import cz.vectoun.myapp.persistance.dao.NoteGroupDao;
+import cz.vectoun.myapp.persistance.entity.Note;
 import cz.vectoun.myapp.persistance.entity.NoteGroup;
 import cz.vectoun.myapp.persistance.entity.User;
 import org.springframework.stereotype.Service;

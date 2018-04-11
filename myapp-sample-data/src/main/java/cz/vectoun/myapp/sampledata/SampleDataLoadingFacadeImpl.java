@@ -1,5 +1,6 @@
 package cz.vectoun.myapp.sampledata;
 
+import cz.vectoun.myapp.persistance.entity.NoteGroup;
 import cz.vectoun.myapp.persistance.entity.User;
 import cz.vectoun.myapp.persistance.enums.UserRole;
 import cz.vectoun.myapp.service.UserService;
@@ -23,7 +24,7 @@ public class SampleDataLoadingFacadeImpl implements SampleDataLoadingFacade {
 	}
 
 	@Override
-	public void loadUserData() {
+	public void loadData() {
 		User user1 = new User();
 		User user2 = new User();
 		User user3 = new User();

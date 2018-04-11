@@ -2,6 +2,7 @@ package cz.vectoun.myapp.facade;
 
 import cz.vectoun.myapp.api.dto.CreateNoteGroupDTO;
 import cz.vectoun.myapp.api.dto.NoteGroupDTO;
+import cz.vectoun.myapp.api.dto.UpdateNoteGroupDTO;
 import cz.vectoun.myapp.api.facade.NoteGroupFacade;
 import cz.vectoun.myapp.persistance.entity.NoteGroup;
 import cz.vectoun.myapp.persistance.entity.User;
@@ -86,21 +87,21 @@ public class NoteGroupFacadeImpl implements NoteGroupFacade {
     }
 
     @Override
-    public NoteGroupDTO updateNoteGroup(NoteGroupDTO newVersion) {
-        if (newVersion == null) {
+    public NoteGroupDTO updateNoteGroup(Long id, UpdateNoteGroupDTO update) {
+        if (update == null) {
             throw new IllegalArgumentException("New version can not be null.");
         }
-        if (newVersion.getId() == null) {
+        if (id == null) {
             throw new IllegalArgumentException("New version needs to have an id set.");
         }
 
-        NoteGroup foundGroup = noteGroupService.findById(newVersion.getId());
+        NoteGroup foundGroup = noteGroupService.findById(id);
 
         if (foundGroup == null) {
-            throw new IllegalArgumentException("For given id was no group found: " + newVersion);
+            throw new IllegalArgumentException("For given id was no group found: " + id);
         }
 
-        foundGroup.setName(newVersion.getName());
+        foundGroup.setName(update.getName());
 
         return beanMappingService.mapTo(foundGroup, NoteGroupDTO.class);
     }

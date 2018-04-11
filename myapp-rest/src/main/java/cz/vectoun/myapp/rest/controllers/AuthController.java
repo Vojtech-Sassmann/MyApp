@@ -45,7 +45,7 @@ public class AuthController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public final boolean authenticate(@RequestBody AuthDTO authDTO, HttpServletResponse response,
-									  HttpServletRequest request) throws Exception {
+									  HttpServletRequest request) {
 
 		log.debug("rest authenticate({})", authDTO);
 
@@ -78,7 +78,7 @@ public class AuthController {
 
 	/**
 	 * Logout user curl -i -X DELETE
-	 * 'http://localhost:8080/pa165/rest/auth?email=alojz@hlinka.com&password=1234'
+	 * 'rest/auth?email=alojz@hlinka.com&password=1234'
 	 *
 	 * @return true if logout succeeded
 	 */

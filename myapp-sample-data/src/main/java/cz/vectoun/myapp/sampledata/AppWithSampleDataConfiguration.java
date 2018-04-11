@@ -25,7 +25,7 @@ public class AppWithSampleDataConfiguration {
 	}
 
 	@PostConstruct
-	public void dataLoading() throws IOException {
-		sampleDataLoadingFacade.loadUserData();
+	public void dataLoading() {
+		sampleDataLoadingFacade.loadData();
 	}
 }

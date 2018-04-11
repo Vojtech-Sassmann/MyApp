@@ -1,5 +1,7 @@
 package cz.vectoun.myapp.service.service;
 
+import cz.vectoun.myapp.service.NoteGroupService;
+import cz.vectoun.myapp.service.NoteService;
 import cz.vectoun.myapp.service.UserService;
 import cz.vectoun.myapp.service.UserServiceImpl;
 import cz.vectoun.myapp.persistance.dao.UserDao;
@@ -25,6 +27,8 @@ import static org.mockito.Mockito.when;
 public class UserServiceImplTest {
 
     private UserDao userDao = mock(UserDao.class);
+    private NoteGroupService noteGroupService = mock(NoteGroupService.class);
+    private NoteService noteService = mock(NoteService.class);
 
     private User user1;
     private User user2;
@@ -35,7 +39,7 @@ public class UserServiceImplTest {
 
     @BeforeMethod
     public void setService() {
-        userService = new UserServiceImpl(userDao);
+        userService = new UserServiceImpl(userDao, noteGroupService, noteService);
     }
 
     @BeforeMethod

@@ -1,5 +1,6 @@
 package cz.vectoun.myapp.rest.controllers;
 
+import cz.vectoun.myapp.api.dto.RegisterUserDTO;
 import cz.vectoun.myapp.api.dto.UserDTO;
 import cz.vectoun.myapp.api.enums.UserRole;
 import cz.vectoun.myapp.api.facade.UserFacade;
@@ -44,7 +45,7 @@ public class UsersController {
 
 	/**
 	 * Get list of Users curl -i -X GET
-	 * http://localhost:8080/pa165/rest/auth/users
+	 * rest/auth/users
 	 *
 	 * @return list of UserDTOs
 	 */
@@ -62,7 +63,7 @@ public class UsersController {
 
 	/**
 	 * Get User by identifier id curl -i -X GET
-	 * http://localhost:8080/pa165/rest/auth/users/1
+	 * rest/auth/users/1
 	 *
 	 * @param id user identifier
 	 * @return UserDTO
@@ -86,7 +87,7 @@ public class UsersController {
 
 	/**
 	 * Get User by email curl -i -X GET
-	 * http://localhost:8080/pa165/rest/auth/users/filter?email=jozoraz@azet.sk
+	 * rest/auth/users/filter?email=jozoraz@azet.sk
 	 *
 	 * @param email user email
 	 * @return UserDTO
@@ -110,7 +111,7 @@ public class UsersController {
 
 	/**
 	 * Delete one user by id curl -i -X DELETE
-	 * http://localhost:8080/pa165/rest/auth/users/1
+	 * rest/auth/users/1
 	 *
 	 * @param id identifier of user
 	 * @throws ResourceNotFoundException when user with given ID wasn't found
@@ -135,35 +136,33 @@ public class UsersController {
 	/**
 	 * Register a new user by POST method
 	 * curl -X POST -i -H "Content-Type: application/json" --data
-	 * '{"firstName":"Lukas","lastName":"Novak","email":"lukas@novak.com"}'
-	 * http://localhost:8080/pa165/rest/auth/users/register?unencryptedPassword=0000
+	 * '{"firstName":"Lukas","lastName":"Novak","email":"lukas@novak.com", "unencryptedPassword":"0000"}'
+	 * rest/auth/users/register
 	 *
-	 * @param userDTO with required fields for creation
-	 * @param unencryptedPassword password
+	 * @param registerUserDTO with required fields for creation
 	 * @throws ResourceAlreadyExistingException when user with given email already exists
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public final void registerUser(@RequestBody UserDTO userDTO,
-	                               @RequestParam("unencryptedPassword") String unencryptedPassword,
-	                               HttpServletRequest request){
+	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+			consumes = MediaType.APPLICATION_JSON_VALUE)
+	public final Long registerUser(@RequestBody RegisterUserDTO registerUserDTO, HttpServletRequest request){
 
-		log.debug("Rest registerUser ({}, {})" , userDTO, unencryptedPassword);
+		log.debug("Rest registerUser ()");
 
 		if(!roleResolver.hasRole(request, UserRole.ADMIN)) {
 			throw new PrivilegeException("Not permitted.");
 		}
 
-		UserDTO foundUser = userFacade.findUserByEmail(userDTO.getEmail());
-		if (foundUser != null){
+		UserDTO foundUser = userFacade.findUserByEmail(registerUserDTO.getEmail());
+		if (foundUser != null) {
 			throw new ResourceAlreadyExistingException("User with given email already exists.");
 		} else {
-			userFacade.registerUser(userDTO, unencryptedPassword);
+			return userFacade.registerUser(registerUserDTO);
 		}
 	}
 
 	/**
 	 * Check if is user admin by his id curl -i -X GET
-	 * http://localhost:8080/pa165/rest/auth/users/isAdmin?id=1
+	 * rest/auth/users/isAdmin?id=1
 	 * @param id user identifier
 	 * @return true if is user admin, false otherwise
 	 * @throws ResourceNotFoundException exception
@@ -188,7 +187,7 @@ public class UsersController {
 	 * set Admin role to the user
 	 * curl -i -X PUT -H
 	 * "Content-Type: application/json"
-	 * http://localhost:8080/pa165/rest/auth/users/setAdmin?id=1
+	 * rest/auth/users/setAdmin?id=1
 	 *
 	 * @param id identified of the user
 	 */
@@ -212,7 +211,7 @@ public class UsersController {
 	 * set Regular role to the user
 	 * curl -i -X PUT -H
 	 * "Content-Type: application/json"
-	 * http://localhost:8080/pa165/rest/auth/removeAdmin?id=1
+	 * rest/auth/removeAdmin?id=1
 	 *
 	 * @param id identified of the user
 	 */

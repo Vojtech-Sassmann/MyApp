@@ -2,6 +2,7 @@ package cz.vectoun.myapp.api.facade;
 
 import cz.vectoun.myapp.api.dto.CreateNoteGroupDTO;
 import cz.vectoun.myapp.api.dto.NoteGroupDTO;
+import cz.vectoun.myapp.api.dto.UpdateNoteGroupDTO;
 
 import java.util.List;
 
@@ -34,10 +35,11 @@ public interface NoteGroupFacade {
     /**
      * Updates note group
      *
-     * @param newVersion new version of note group
+     * @param id id of note group
+     * @param update new version of note group
      * @return updated note group
      */
-    NoteGroupDTO updateNoteGroup(NoteGroupDTO newVersion);
+    NoteGroupDTO updateNoteGroup(Long id, UpdateNoteGroupDTO update);
 
     /**
      * Finds all noteGroups for given user.

@@ -41,7 +41,9 @@ public class NoteFacadeImpl implements NoteFacade {
         }
 
         Note note = new Note();
+        note.setName("Nice Hack here");
         noteService.createNote(note, foundGroup);
+        note.setName(note.getName() + note.getId());
 
         return beanMappingService.mapTo(note, NoteDTO.class);
     }

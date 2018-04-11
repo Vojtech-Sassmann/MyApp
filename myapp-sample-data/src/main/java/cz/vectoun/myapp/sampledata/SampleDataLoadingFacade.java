@@ -5,5 +5,5 @@ package cz.vectoun.myapp.sampledata;
  */
 public interface SampleDataLoadingFacade {
 
-	void loadUserData();
+	void loadData();
 }

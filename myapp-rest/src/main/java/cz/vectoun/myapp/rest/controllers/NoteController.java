@@ -80,4 +80,23 @@ public class NoteController {
 
         return noteFacade.updateNote(id, update.getText());
     }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteNote(@PathVariable("id") long id, HttpServletRequest request) {
+
+        log.debug("rest deleteNote({})", id);
+
+        NoteDTO note = noteFacade.findById(id);
+
+        if (note == null) {
+            throw new ResourceNotFoundException("For given id does not exist note");
+        }
+
+        if (!(roleResolver.canAccess(request, note) ||
+            roleResolver.hasRole(request, UserRole.ADMIN))) {
+            throw new PrivilegeException("Not permitted.");
+        }
+
+        noteFacade.deleteNote(id);
+    }
 }

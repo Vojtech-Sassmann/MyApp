@@ -1,5 +1,7 @@
 package cz.vectoun.myapp.persistance.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -21,6 +24,10 @@ public class Note {
 
     @ManyToOne
     private NoteGroup noteGroup;
+
+    @NotNull
+    @NotEmpty
+    private String name;
 
     private String text;
 
@@ -82,18 +89,28 @@ public class Note {
         this.text = text;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Note)) return false;
         Note note = (Note) o;
-        return Objects.equals(getText(), note.getText()) &&
-                Objects.equals(created, note.created) &&
-                Objects.equals(updated, note.updated);
+        return Objects.equals(getName(), note.getName()) &&
+                Objects.equals(getText(), note.getText()) &&
+                Objects.equals(getCreated(), note.getCreated()) &&
+                Objects.equals(getUpdated(), note.getUpdated());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getText(), created, updated);
+
+        return Objects.hash(getName(), getText(), getCreated(), getUpdated());
     }
 }

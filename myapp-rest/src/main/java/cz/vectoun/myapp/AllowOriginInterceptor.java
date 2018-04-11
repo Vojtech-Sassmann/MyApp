@@ -23,11 +23,12 @@ public class AllowOriginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		String origin = request.getHeader("Origin");
 
+		System.out.println(origin);
 		response.setHeader("Access-Control-Allow-Origin", origin);
 		response.setHeader("Access-Control-Allow-Methods",
 				"GET, POST, PUT, DELETE, OPTIONS");
 		response.setHeader("Access-Control-Allow-Credentials", "true");
-		response.setHeader("Access-Control-Allow-Headers","Content-Type, *");
+		response.setHeader("Access-Control-Allow-Headers","X-Requested-With, Content-Type, *");
 		return true;
 	}
 

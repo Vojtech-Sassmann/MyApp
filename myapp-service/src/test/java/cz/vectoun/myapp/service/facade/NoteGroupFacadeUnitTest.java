@@ -2,6 +2,7 @@ package cz.vectoun.myapp.service.facade;
 
 import cz.vectoun.myapp.api.dto.CreateNoteGroupDTO;
 import cz.vectoun.myapp.api.dto.NoteGroupDTO;
+import cz.vectoun.myapp.api.dto.UpdateNoteGroupDTO;
 import cz.vectoun.myapp.api.facade.NoteGroupFacade;
 import cz.vectoun.myapp.facade.NoteGroupFacadeImpl;
 import cz.vectoun.myapp.persistance.entity.NoteGroup;
@@ -75,11 +76,10 @@ public class NoteGroupFacadeUnitTest extends AbstractTestNGSpringContextTests {
     public void testUpdateNoteGroup() {
         when(noteGroupService.findById(1L)).thenReturn(mockedNoteGroup);
 
-        NoteGroupDTO newVersion = new NoteGroupDTO();
-        newVersion.setId(1L);
+        UpdateNoteGroupDTO newVersion = new UpdateNoteGroupDTO();
         newVersion.setName("AHAH");
 
-        noteGroupFacade.updateNoteGroup(newVersion);
+        noteGroupFacade.updateNoteGroup(1L, newVersion);
 
         verify(mockedNoteGroup, times(1)).setName(newVersion.getName());
     }
